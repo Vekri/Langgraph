@@ -1,0 +1,39 @@
+Learn LangGraph in plain English — build stateful AI agents with graph-based workflows.
+
+In this beginner-friendly walkthrough you’ll understand nodes, edges, state, and cycles, then run a simple Mini Support Agent sample project (no API key needed).
+
+⏱ Chapters
+0:00 Intro — LangGraph Tutorial
+What is LangGraph?
+Five superpowers (graph-based, stateful, cyclic, multi-agent, full control)
+Building blocks: Node, Edge, State, Entry/End
+How a LangGraph runs (Understand → Decide → Act → Loop)
+Real-world use cases
+Build in 4 steps
+Minimal code example
+Sample project: Mini Support Agent
+Project flow & code
+Run examples
+Recap
+
+📦 Code on GitHub
+https://github.com/Vekri/Langgraph
+
+▶ Run the sample
+cd sample_project
+pip install langgraph
+python support_agent.py
+
+▶ Four use-case apps (one place)
+cd use_cases_app
+streamlit run app.py
+
+1) AI Assistants — remember & act
+2) Research Agents — search, analyze, summarize
+3) Automation — multi-step with retries
+4) Multi-Agent — specialists working together
+
+🔗 Resources
+LangGraph docs: https://langchain-ai.github.io/langgraph/
+
+#LangGraph #AIAgents #LangChain #Python #AgenticAI #Tutorial #MachineLearning

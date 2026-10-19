@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LangGraph Tutorial — Video with Voice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0b2430;
+      --ink-soft: #3d5a66;
+      --teal: #0f766e;
+      --teal-bright: #14b8a6;
+      --line: rgba(15, 118, 110, 0.18);
+      --shadow: 0 18px 50px rgba(11, 36, 48, 0.12);
+      --stage-w: min(1120px, 96vw);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: "Instrument Sans", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, #a7f3d0 0%, transparent 55%),
+        radial-gradient(ellipse 70% 45% at 100% 0%, #99f6e4 0%, transparent 50%),
+        linear-gradient(165deg, #eef8f5 0%, #f7fbfa 45%, #e6f3ef 100%);
+    }
+    .bg-grid {
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+      pointer-events: none; opacity: 0.55; z-index: 0;
+    }
+    .wrap { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 28px 16px 48px; }
+    header.top {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; margin-bottom: 18px; flex-wrap: wrap;
+    }
+    .brand {
+      font-family: "Space Grotesk", sans-serif; font-weight: 700;
+      font-size: 1.15rem; display: flex; align-items: center; gap: 10px;
+    }
+    .brand-mark {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--teal), var(--teal-bright));
+      display: grid; place-items: center; color: white; font-size: 0.85rem;
+    }
+    .hint { font-size: 0.9rem; color: var(--ink-soft); }
+    .player {
+      width: var(--stage-w); margin: 0 auto; background: #fff; border-radius: 22px;
+      overflow: hidden; box-shadow: var(--shadow); border: 1px solid rgba(15, 118, 110, 0.12);
+    }
+    .stage { position: relative; aspect-ratio: 16 / 9; background: #e8f7f3; }
+    .stage video { width: 100%; height: 100%; display: block; object-fit: contain; }
+    .controls {
+      display: grid; grid-template-columns: auto 1fr auto; gap: 14px;
+      align-items: center; padding: 14px 18px 16px; background: #0b2430; color: white;
+    }
+    .btn {
+      border: none; cursor: pointer; font-family: inherit; font-weight: 600;
+      border-radius: 999px; padding: 10px 18px;
+    }
+    .btn-play { background: var(--teal-bright); color: var(--ink); min-width: 108px; }
+    .btn-ghost {
+      background: transparent; color: #a7f3d0; border: 1px solid rgba(167, 243, 208, 0.35);
+      padding: 8px 12px; font-size: 0.85rem;
+    }
+    .timeline { display: flex; flex-direction: column; gap: 6px; }
+    .bar { height: 6px; background: rgba(255,255,255,0.15); border-radius: 999px; overflow: hidden; cursor: pointer; }
+    .bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #14b8a6, #5eead4); }
+    .meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: #99f6e4; }
+    .side-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chapters { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; justify-content: center; }
+    .chip {
+      border: 1px solid var(--line); background: white; color: var(--ink-soft);
+      border-radius: 999px; padding: 7px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+    }
+    .chip:hover, .chip.on { background: var(--teal); color: white; border-color: var(--teal); }
+    .footer-note { text-align: center; margin-top: 18px; font-size: 0.85rem; color: var(--ink-soft); }
+    .footer-note code {
+      background: white; padding: 2px 8px; border-radius: 6px; border: 1px solid var(--line); font-size: 0.8rem;
+    }
+    .project-box {
+      margin: 22px auto 0; max-width: var(--stage-w); background: white; border-radius: 16px;
+      padding: 18px 20px; border: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .project-box h3 {
+      font-family: "Space Grotesk", sans-serif; color: var(--teal); margin-bottom: 8px;
+    }
+    .project-box p { color: var(--ink-soft); margin-bottom: 10px; line-height: 1.45; }
+    @media (max-width: 900px) { .controls { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand"><span class="brand-mark">LG</span> LangGraph Video Tutorial</div>
+      <p class="hint">With voice narration + Mini Support Agent sample project</p>
+    </header>
+
+    <div class="player">
+      <div class="stage">
+        <video id="vid" src="langgraph_tutorial.mp4" playsinline preload="metadata"></video>
+      </div>
+      <div class="controls">
+        <button class="btn btn-play" id="playBtn" type="button">▶ Play</button>
+        <div class="timeline">
+          <div class="bar" id="seekBar"><div class="bar-fill" id="barFill"></div></div>
+          <div class="meta">
+            <span id="chapterLabel">Intro · LangGraph Tutorial</span>
+            <span id="timeLabel">0:00 / 0:00</span>
+          </div>
+        </div>
+        <div class="side-btns">
+          <button class="btn btn-ghost" id="prevBtn" type="button">‹ Prev</button>
+          <button class="btn btn-ghost" id="nextBtn" type="button">Next ›</button>
+          <button class="btn btn-ghost" id="muteBtn" type="button">🔊 Voice</button>
+          <button class="btn btn-ghost" id="fsBtn" type="button">⛶ Full</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapters" id="chapters"></div>
+
+    <div class="project-box">
+      <h3>Sample project: Mini Support Agent</h3>
+      <p>
+        After watching, run the simple project in this same folder.
+        It routes messages to greeting / billing / tech using LangGraph — no API key needed.
+      </p>
+      <p><code>cd sample_project</code> &nbsp; then &nbsp; <code>python support_agent.py</code></p>
+    </div>
+
+    <p class="footer-note">
+      Rebuild video+voice: <code>python generate_video.py</code>
+      (needs internet once for Edge TTS voice)
+    </p>
+  </div>
+
+  <script src="chapters.js"></script>
+  <script>
+    const FALLBACK = [
+      { title: "Intro · LangGraph Tutorial", start: 0, duration: 10 },
+      { title: "01 · What is LangGraph?", start: 10, duration: 10 },
+      { title: "02 · Five superpowers", start: 20, duration: 10 },
+      { title: "03 · Building blocks", start: 30, duration: 10 },
+      { title: "04 · How it runs", start: 40, duration: 10 },
+      { title: "05 · Use cases", start: 50, duration: 10 },
+      { title: "06 · Four steps", start: 60, duration: 8 },
+      { title: "07 · Minimal code", start: 68, duration: 12 },
+      { title: "08 · Sample project", start: 80, duration: 12 },
+      { title: "09 · Project flow", start: 92, duration: 12 },
+      { title: "10 · Project code", start: 104, duration: 12 },
+      { title: "11 · Run examples", start: 116, duration: 12 },
+      { title: "12 · Recap", start: 128, duration: 10 },
+    ];
+    const SCENES = window.TUTORIAL_CHAPTERS || FALLBACK;
+
+    const vid = document.getElementById("vid");
+    const playBtn = document.getElementById("playBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const muteBtn = document.getElementById("muteBtn");
+    const fsBtn = document.getElementById("fsBtn");
+    const barFill = document.getElementById("barFill");
+    const seekBar = document.getElementById("seekBar");
+    const chapterLabel = document.getElementById("chapterLabel");
+    const timeLabel = document.getElementById("timeLabel");
+    const chaptersEl = document.getElementById("chapters");
+
+    function fmt(t) {
+      t = Math.max(0, Math.floor(t || 0));
+      return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
+    }
+    function sceneIndex(t) {
+      let i = 0;
+      for (let n = 0; n < SCENES.length; n++) if (t >= SCENES[n].start) i = n;
+      return i;
+    }
+
+    SCENES.forEach((s, i) => {
+      const chip = document.createElement("button");
+      chip.className = "chip" + (i === 0 ? " on" : "");
+      chip.type = "button";
+      chip.textContent = s.title.replace(/^(\d+ · )/, "");
+      chip.addEventListener("click", () => { vid.currentTime = s.start; vid.play(); });
+      chaptersEl.appendChild(chip);
+    });
+
+    function syncUI() {
+      const t = vid.currentTime || 0;
+      const d = vid.duration || (SCENES.at(-1).start + SCENES.at(-1).duration);
+      barFill.style.width = `${(t / d) * 100}%`;
+      timeLabel.textContent = `${fmt(t)} / ${fmt(d)}`;
+      const idx = sceneIndex(t);
+      chapterLabel.textContent = SCENES[idx].title;
+      [...chaptersEl.children].forEach((c, n) => c.classList.toggle("on", n === idx));
+      playBtn.textContent = vid.paused ? (vid.ended ? "↻ Replay" : "▶ Play") : "❚❚ Pause";
+      muteBtn.textContent = vid.muted ? "🔇 Voice" : "🔊 Voice";
+    }
+
+    playBtn.addEventListener("click", () => {
+      if (vid.paused) {
+        if (vid.ended) vid.currentTime = 0;
+        vid.play();
+      } else vid.pause();
+    });
+    prevBtn.addEventListener("click", () => {
+      const i = sceneIndex(vid.currentTime);
+      vid.currentTime = SCENES[Math.max(0, i - 1)].start;
+    });
+    nextBtn.addEventListener("click", () => {
+      const i = sceneIndex(vid.currentTime);
+      vid.currentTime = SCENES[Math.min(SCENES.length - 1, i + 1)].start;
+    });
+    muteBtn.addEventListener("click", () => { vid.muted = !vid.muted; syncUI(); });
+    fsBtn.addEventListener("click", () => {
+      if (vid.requestFullscreen) vid.requestFullscreen();
+    });
+    seekBar.addEventListener("click", (e) => {
+      const rect = seekBar.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+      vid.currentTime = ratio * (vid.duration || 1);
+    });
+
+    ["timeupdate", "loadedmetadata", "play", "pause", "ended", "volumechange"].forEach(ev => {
+      vid.addEventListener(ev, syncUI);
+    });
+    syncUI();
+  </script>
+</body>
+</html>
