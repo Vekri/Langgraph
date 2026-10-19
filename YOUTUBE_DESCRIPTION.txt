@@ -1,5 +1,9 @@
 Learn LangGraph in plain English — build stateful AI agents with graph-based workflows.
 
+▶ Watch this tutorial:
+https://www.youtube.com/watch?v=6zHbVkJL4E0
+LangGraph Tutorial for Beginners | Build AI Agents with Graphs (Sample Project Included)
+
 In this beginner-friendly walkthrough you’ll understand nodes, edges, state, and cycles, then run a simple Mini Support Agent sample project (no API key needed).
 
 ⏱ Chapters

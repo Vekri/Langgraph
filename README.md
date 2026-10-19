@@ -40,7 +40,10 @@ Then open `index.html` to play `langgraph_tutorial.mp4` with chapters.
 
 ## YouTube
 
-See `YOUTUBE_TITLE.txt` and `YOUTUBE_DESCRIPTION.txt` for upload metadata.
+**Full tutorial:** [LangGraph Tutorial for Beginners | Build AI Agents with Graphs (Sample Project Included)](https://www.youtube.com/watch?v=6zHbVkJL4E0)
+
+Short metadata: `SHORT_YOUTUBE_TITLE.txt`, `SHORT_YOUTUBE_DESCRIPTION.txt`  
+Long-form metadata: `YOUTUBE_TITLE.txt`, `YOUTUBE_DESCRIPTION.txt`
 
 ## License
 

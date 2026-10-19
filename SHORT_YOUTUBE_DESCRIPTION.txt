@@ -1,0 +1,16 @@
+Stop one-shot chatbots. Build agents that remember, decide, and retry.
+
+LangGraph in 50 seconds:
+• Nodes = work
+• Edges = flow
+• State = memory
+• Cycles = retry until done
+
+▶ Full tutorial:
+LangGraph Tutorial for Beginners | Build AI Agents with Graphs (Sample Project Included)
+https://www.youtube.com/watch?v=6zHbVkJL4E0
+
+📦 Code on GitHub:
+https://github.com/Vekri/Langgraph
+
+#LangGraph #AIAgents #LangChain #Python #Shorts #AgenticAI #AI #Coding
